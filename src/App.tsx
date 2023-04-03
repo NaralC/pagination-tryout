@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { usePagination, useClickOutside, useHotkeys } from "@mantine/hooks";
 
 const ITEMS_PER_PAGE = 5;
@@ -76,9 +76,7 @@ function App() {
           <div ref={clickOutsideRef}>
             <input
               onKeyDown={(e) => {
-                if (e.key === "Enter")
-                console.log()
-                  pagination.setPage(Number(e.currentTarget.value));
+                if (e.key === "Enter") pagination.setPage(Number(e.currentTarget.value));
               }}
               type="number"
               className="w-12 text-center"
