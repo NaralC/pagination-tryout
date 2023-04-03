@@ -1,10 +1,5 @@
-import { useState } from "react";
-import {
-  usePagination,
-  useClickOutside,
-  getHotkeyHandler,
-  useHotkeys,
-} from "@mantine/hooks";
+import {  useState } from "react";
+import { usePagination, useClickOutside, useHotkeys } from "@mantine/hooks";
 
 const ITEMS_PER_PAGE = 5;
 const mockResults = [
@@ -34,7 +29,9 @@ function App() {
   );
   const [isEditingPageNumber, setIsEditingPageNumber] =
     useState<boolean>(false);
-  const clickOutsideRef = useClickOutside(() => setIsEditingPageNumber(false));
+  const clickOutsideRef = useClickOutside(() => {
+    setIsEditingPageNumber(false);
+  });
 
   const pagination = usePagination({
     total: Math.ceil(mockResults.length / ITEMS_PER_PAGE),
@@ -53,7 +50,7 @@ function App() {
   ]);
 
   return (
-    <div className="h-screen text-center flex flex-col justify-center align-middle gap-5 text-3xl">
+    <div className="flex flex-col justify-center h-screen gap-5 text-3xl text-center align-middle">
       <div>
         {visibleResults.map((result, idx) => {
           return (
@@ -76,24 +73,20 @@ function App() {
             {pagination.active}
           </div>
         ) : (
-          <input
-            onKeyDown={(e) => {
-              getHotkeyHandler([
-                [
-                  "Enter",
-                  () => {
-                    // console.log(Number(e.currentTarget.value))
-                    pagination.setPage(1);
-                  },
-                ],
-              ]);
-            }}
-            type="number"
-            className="w-12 text-center"
-            ref={clickOutsideRef}
-            defaultValue={pagination.active}
-            max={String(pagination.range).at(-1)}
-          />
+          <div ref={clickOutsideRef}>
+            <input
+              onKeyDown={(e) => {
+                if (e.key === "Enter")
+                console.log()
+                  pagination.setPage(Number(e.currentTarget.value));
+              }}
+              type="number"
+              className="w-12 text-center"
+              defaultValue={pagination.active}
+              min={"1"}
+              max={String(pagination.range).at(-1)}
+            />
+          </div>
         )}
 
         <button onClick={pagination.next}>&gt;</button>
